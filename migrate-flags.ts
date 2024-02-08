@@ -71,16 +71,16 @@ if (projRep.defaultClientSideAvailability) {
   projPost.includeInSnippetByDefault = projRep.includeInSnippetByDefault;
 }
 
-const projResp = await rateLimitRequest(
-  ldAPIPostRequest(inputArgs.apikey, inputArgs.domain, `projects`, projPost),
-  'projects'
-);
+// const projResp = await rateLimitRequest(
+//   ldAPIPostRequest(inputArgs.apikey, inputArgs.domain, `projects`, projPost),
+//   'projects'
+// );
 
-consoleLogger(
-  projResp.status,
-  `Creating Project: ${inputArgs.projKeyDest} Status: ${projResp.status}`,
-);
-await projResp.json();
+// consoleLogger(
+//   projResp.status,
+//   `Creating Project: ${inputArgs.projKeyDest} Status: ${projResp.status}`,
+// );
+// await projResp.json();
 
 await Promise.all(projRep.environments.items.map(async (env: any) => {
   const segmentData = await getJson(
