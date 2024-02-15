@@ -7,8 +7,8 @@ if [[ -z "${LD_QLIK_WRITE_TOKEN}" ]]; then
 fi
 
 # import talend-cloud flags
-echo "importing talend-cloud segments and flags..."
-deno run --allow-env --allow-read --allow-net --allow-write migrate-flags.ts -p talend-cloud -k $LD_QLIK_WRITE_TOKEN -d talend-cloud 2>&1 | tee import_talend-cloud_flags.log
+echo "importing talend-cloud segments and flags into talend-cloud-qlik project..."
+deno run --allow-env --allow-read --allow-net --allow-write migrate-flags.ts -p talend-cloud -k $LD_QLIK_WRITE_TOKEN -d talend-cloud-qlik 2>&1 | tee import_talend-cloud_flags.log
 
 
 if [ $? -ne 0 ]; then

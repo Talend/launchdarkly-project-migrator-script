@@ -188,9 +188,8 @@ for await (const flag of flagData.items) {
     newFlag.defaults = flag.defaults;
   }
 
-  console.log(
-    `Creating flag: ${flag.key} in Project: ${inputArgs.projKeyDest}`,
-  );
+  console.log(`Creating flag: ${flag.key} in Project: ${inputArgs.projKeyDest}`);
+  console.log(JSON.stringify(newFlag));
   const flagResp = await rateLimitRequest(
     ldAPIPostRequest(
       inputArgs.apikey,

@@ -16,14 +16,14 @@ rm qlik*.* stitch*.*
 # get Talend and Qlik flags
 curl -H "Authorization: $LD_TALEND_READ_TOKEN" https://app.launchdarkly.com/api/v2/flags/stitch > stitch_flags.json
 #change the token with the destination token
-curl -H "Authorization: $LD_QLIK_READ_TOKEN" https://app.launchdarkly.com/api/v2/flags/stitch > qlik_stitch_flags.json
+curl -H "Authorization: $LD_QLIK_READ_TOKEN" https://app.launchdarkly.com/api/v2/flags/stitch-qlik > qlik_stitch_flags.json
 
 # beautify jsons
 jq '.' qlik_stitch_flags.json > qlik_stitch_flags_formatted.json ;
 jq '.' stitch_flags.json > stitch_flags_formatted.json
 
 # replace the new Qlik project with the one in Talend
-sed 's/migrate-stitch/stitch/g' qlik_stitch_flags_formatted.json > qlik_stitch_flags_updated.json
+sed 's/stitch-qlik/stitch/g' qlik_stitch_flags_formatted.json > qlik_stitch_flags_updated.json
 
 # Extract the items and delete all specifed attributs whatever the neted level
 jq 'walk(if type == "object" then del(.includeInSnippet, ._debugEventsUntilDate, .version, ._id, .creationDate, .maintainerId, ._links, ._maintainer, ._siteId, ._version, .lastModified, .salt, .sel, ._summary) else . end) | .items[]' stitch_flags_formatted.json > stitch_clean.json ;
