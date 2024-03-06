@@ -10,8 +10,9 @@ echo "deleting local project..."
 rm -rf ./source/project
 # export Stitch project
 echo "Exporting stitch project..."
-deno run --allow-env --allow-read --allow-net --allow-write source.ts -p stitch -k $LD_TALEND_READ_TOKEN
+deno run --allow-env --allow-read --allow-net --allow-write source-projects.ts -p stitch -k $LD_TALEND_READ_TOKEN
 echo "Exporting talend-cloud project..."
-deno run --allow-env --allow-read --allow-net --allow-write source.ts -p talend-cloud -k $LD_TALEND_READ_TOKEN
+deno run --allow-env --allow-read --allow-net --allow-write source-projects.ts -p talend-cloud -k $LD_TALEND_READ_TOKEN
 
-echo "Both stitch and talend-cloud projects have been exported."
+script_location=$(dirname "$0")
+echo "Both stitch and talend-cloud projects have been exported to $script_location/source/project."
