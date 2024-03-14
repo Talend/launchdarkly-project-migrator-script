@@ -161,9 +161,10 @@ await Promise.all(projRep.environments.items.map(async (env: any) => {
 const flagData = await getJson(
   `./source/project/${inputArgs.projKeySource}/flag.json`,
 );
-
+var count = 1;
 // Creating Global Flags //
 for await (const flag of flagData.items) {
+  console.log("Creating flag N° ", count++);
   const newVariations = flag.variations.map(({ _id, ...rest }) => rest);
 
   const newFlag: any = {
@@ -213,9 +214,10 @@ projectJson.environments.items.forEach((env: any) => {
 
 
 const flagsDoubleCheck: string[] = [];
-var count = 0;
+count = 1;
 
 for await (const flag of flagData.items) {
+  console.log("patch flag N° ", count++);
   for await (const env of envList) {
     const patchReq: any[] = [];
     const flagEnvData = flag.environments[env];

@@ -9,6 +9,11 @@ export async function getJson(filePath: string) {
 }
 
 export async function rateLimitRequest(req: Request, path: String) {
+  return rateLimitRequestLogs(req, path, 1);
+}
+
+export async function rateLimitRequestLogs(req: Request, path: String, recurseIndex: number) {
+  console.log(`Rate Limit call on request ${req.url} for the ${recurseIndex} time`);
   const rateLimitReq = req.clone();
   const res = await fetch(req);
   let newRes = res;
@@ -20,18 +25,20 @@ export async function rateLimitRequest(req: Request, path: String) {
   }
   if (res.status == 429) {
     const rateLimit = res.headers.get("x-ratelimit-reset");
-    const end = Number(rateLimit) + 2_500;
+    const end = Number(rateLimit) + 1_000;
     const d = new Date(0);
     console.log(`${res.statusText}`);
     d.setUTCMilliseconds(end);
     console.log(`Rate Limited until: ${d} for request ${req.url}`);
     while (Date.now() < end);
     console.log(`Making new request for request ${req.url}`);
-    newRes = await rateLimitRequest(rateLimitReq, path);
+    newRes = await rateLimitRequestLogs(rateLimitReq, path, recurseIndex + 1);
   }
 
   return newRes;
 }
+
+
 
 export function ldAPIPostRequest(
   apiKey: string,
